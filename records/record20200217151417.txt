@@ -1,0 +1,107 @@
+[Key.enter] released --0.06100344657897949
+Left Button Pressed at (158,1062,1.7380993366241455)
+Left Button Released at (158,1062,0.07500433921813965)
+Left Button Pressed at (512,251,2.0941197872161865)
+Left Button Released at (512,251,0.08100461959838867)
+Left Button Pressed at (416,366,1.4140808582305908)
+Left Button Released at (416,366,0.08000445365905762)
+Left Button Pressed at (671,249,0.7800447940826416)
+Left Button Released at (671,249,0.1000056266784668)
+alphanumeric key [s] pressed --0.948054313659668
+[s] released --0.12700724601745605
+alphanumeric key [c] pressed --0.044002532958984375
+alphanumeric key [x] pressed --0.13200736045837402
+[c] released --0.01000070571899414
+[x] released --0.07800436019897461
+special key [Key.shift] pressed --1.0040576457977295
+[Key.shift] released --0.13200736045837402
+alphanumeric key [0] pressed --1.552088737487793
+[0] released --0.10700631141662598
+alphanumeric key [0] pressed --0.10100579261779785
+[0] released --0.07300400733947754
+alphanumeric key [0] pressed --0.12000679969787598
+[0] released --0.10300588607788086
+alphanumeric key [0] pressed --0.2240128517150879
+[0] released --0.08300495147705078
+alphanumeric key [0] pressed --0.09500527381896973
+[0] released --0.09500551223754883
+alphanumeric key [1] pressed --0.25501441955566406
+[1] released --0.09600567817687988
+Left Button Pressed at (1491,249,1.926110029220581)
+Left Button Released at (1491,249,0.06200361251831055)
+Left Button Pressed at (1499,275,0.9020516872406006)
+Left Button Released at (1499,275,0.05700325965881348)
+Left Button Pressed at (470,288,0.6940395832061768)
+Left Button Released at (470,288,0.06000351905822754)
+Left Button Pressed at (452,313,0.5180296897888184)
+Left Button Released at (452,313,0.06700372695922852)
+Left Button Pressed at (570,287,1.3660781383514404)
+Left Button Released at (570,287,0.08800506591796875)
+Left Button Pressed at (470,809,3.214183807373047)
+Left Button Released at (470,809,0.06900382041931152)
+scrolled down at (827, 634, 0, -1, 1.549088716506958)
+scrolled down at (827, 634, 0, -1, 0.22501277923583984)
+Left Button Pressed at (733,840,1.6230928897857666)
+Left Button Released at (733,840,0.05600333213806152)
+Left Button Pressed at (733,840,0.5050287246704102)
+Left Button Released at (733,840,0.07500433921813965)
+Left Button Pressed at (731,840,1.0140581130981445)
+Left Button Released at (731,840,0.09300518035888672)
+Left Button Pressed at (692,640,0.6150352954864502)
+Left Button Released at (692,640,0.07300400733947754)
+Left Button Pressed at (692,640,0.06600379943847656)
+Left Button Released at (692,639,0.09200525283813477)
+Left Button Pressed at (1007,858,1.1180641651153564)
+Left Button Released at (1007,858,0.07800436019897461)
+Left Button Pressed at (1007,858,0.11900687217712402)
+Left Button Released at (1007,858,0.0760042667388916)
+Left Button Pressed at (1007,858,0.16800951957702637)
+Left Button Released at (1007,858,0.07900452613830566)
+Left Button Pressed at (1339,448,3.5162012577056885)
+Left Button Released at (1342,528,1.3580775260925293)
+Left Button Pressed at (1314,282,2.033116340637207)
+Left Button Released at (1314,282,0.12900733947753906)
+Left Button Pressed at (1277,406,3.7692155838012695)
+Left Button Released at (1277,406,0.07900452613830566)
+alphanumeric key [c] pressed --0.7470426559448242
+alphanumeric key [e] pressed --0.10400605201721191
+[c] released --0.07200407981872559
+[e] released --0.04800271987915039
+alphanumeric key [s] pressed --0.016000986099243164
+alphanumeric key [h] pressed --0.11200642585754395
+[s] released --0.03300189971923828
+alphanumeric key [i] pressed --0.07900452613830566
+[h] released --0.05600333213806152
+[i] released --0.12000679969787598
+special key [Key.backspace] pressed --0.7390422821044922
+[Key.backspace] released --0.09500527381896973
+special key [Key.backspace] pressed --0.05500316619873047
+[Key.backspace] released --0.0870051383972168
+special key [Key.backspace] pressed --0.05600309371948242
+[Key.backspace] released --0.09600543975830078
+special key [Key.backspace] pressed --0.07200407981872559
+[Key.backspace] released --0.07200431823730469
+special key [Key.backspace] pressed --0.06500363349914551
+[Key.backspace] released --0.09500527381896973
+special key [Key.shift] pressed --0.14400839805603027
+[Key.shift] released --0.14400815963745117
+alphanumeric key [c] pressed --0.31201791763305664
+alphanumeric key [e] pressed --0.09600543975830078
+[c] released --0.08800506591796875
+[e] released --0.02500152587890625
+alphanumeric key [s] pressed --0.07200407981872559
+alphanumeric key [h] pressed --0.08000445365905762
+[s] released --0.034002065658569336
+alphanumeric key [i] pressed --0.0370020866394043
+[h] released --0.05700325965881348
+special key [Key.space] pressed --0.08800506591796875
+[i] released --0.011000633239746094
+[Key.space] released --0.0760042667388916
+special key [Key.shift] pressed --0.41602373123168945
+alphanumeric key [?] pressed --0.3280189037322998
+[?] released --0.11200642585754395
+[Key.shift] released --0.04000210762023926
+Left Button Pressed at (1726,847,3.6622095108032227)
+Left Button Released at (1726,847,0.0760045051574707)
+special key [Key.esc] pressed --3.0861763954162598
+[Key.esc] released --0.11200642585754395
