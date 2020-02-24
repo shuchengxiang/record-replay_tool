@@ -1,6 +1,7 @@
 from pynput import mouse
 from pynput.mouse import Button, Controller as mouse_Controller
 import pyscreeze
+from pynput import keyboard
 from pynput.keyboard import Key, Controller as keyboard_Controller
 import time
 import os
@@ -8,7 +9,11 @@ import os
 # pyautogui.scroll(-100)
 
 
-def replay_(file_name):
+def replay_(file_name=None):
+    stop_replay = False
+    replay_result = 'replay_complete'
+    if not file_name:
+        return
     mouse1 = mouse_Controller()
     keyboard1 = keyboard_Controller()
 
@@ -30,54 +35,66 @@ def replay_(file_name):
         mouse_obj.position = (int(x), int(y))
         mouse_obj.scroll(int(dx)*100, int(dy)*100)
 
-    def keyboard_type(keyboard_obj, readline, key_type, op):
+    def keyboard_type(keyboard_obj, readline, op):
         key = readline.split('[')[-1].split(']')[0]
         time_wait = float(readline.split('--')[-1])
         time.sleep(float(time_wait))
         if op == 'pressed':
-            if key_type == 'alphanumeric key':
+            try:
                 keyboard_obj.press(key)
-                print(key, 'pressed')
-            elif key_type == 'special key':
+            except ValueError:
                 keyboard_obj.press(eval(key))
+            print(key, 'pressed')
 
         elif op == 'released':
-            if key_type == 'alphanumeric key':
-                print(key, 'released')
+            try:
                 keyboard_obj.release(key)
-            elif key_type == 'special key':
-                print(key, 'released')
+            except ValueError:
                 keyboard_obj.release(eval(key))
+            print(key, 'released')
 
     with open(file_name, 'r') as f:
         data = f.readlines()
-    for each in data:
-        if 'Left Button Pressed at' in each:
-            mouse_move_click(mouse1, each, 'pressed', Button.left)
-        elif 'Left Button Released at' in each:
-            mouse_move_click(mouse1, each, 'released', Button.left)
-        elif 'Right Button Pressed at' in each:
-            mouse_move_click(mouse1, each, 'pressed', Button.right)
-        elif 'Right Button Released at' in each:
-            mouse_move_click(mouse1, each, 'released', Button.right)
-        elif 'Middle Button Pressed at' in each:
-            mouse_move_click(mouse1, each, 'pressed', Button.middle)
-        elif 'Middle Button Released at' in each:
-            mouse_move_click(mouse1, each, 'released', Button.middle)
-        elif 'scrolled' in each:
-            mouse_scroll(mouse1, each)
 
-        elif 'pressed' in each:
-            if 'alphanumeric key' in each:
-                keyboard_type(keyboard1, each, 'alphanumeric key', 'pressed')
-            elif 'special key' in each:
-                keyboard_type(keyboard1, each, 'special key', 'pressed')
-        elif 'released' in each:
-            if 'Key.' in each:
-                keyboard_type(keyboard1, each, 'special key', 'released')
-            else:
-                keyboard_type(keyboard1, each, 'alphanumeric key', 'released')
+    def on_press(key):
+        if key == keyboard.Key.esc:
+            print(key)
+            nonlocal stop_replay
+            stop_replay = True
+            # Stop listener
+            return False
 
+    # 监听中断replay的键
+    with keyboard.Listener(on_press=on_press, on_release=None) as listener1:
+        for each in data:
+            if 'Left Button Released at' in each:
+                mouse_move_click(mouse1, each, 'released', Button.left)
+            elif 'Right Button Released at' in each:
+                mouse_move_click(mouse1, each, 'released', Button.right)
+            elif 'Middle Button Released at' in each:
+                mouse_move_click(mouse1, each, 'released', Button.middle)
+            elif 'released' in each:
+                keyboard_type(keyboard1, each, 'released')
+            # 此处最好将中断放在release，防止出现结束还有按键按下的问题导致错乱，
+            # 这也是把release代码放在上面判断的原因
+            elif stop_replay:
+                print('stop_replay')
+                replay_result = 'stop_replay'
+                break
+
+            elif 'Left Button Pressed at' in each:
+                mouse_move_click(mouse1, each, 'pressed', Button.left)
+            elif 'Right Button Pressed at' in each:
+                mouse_move_click(mouse1, each, 'pressed', Button.right)
+            elif 'Middle Button Pressed at' in each:
+                mouse_move_click(mouse1, each, 'pressed', Button.middle)
+
+            elif 'scrolled' in each:
+                mouse_scroll(mouse1, each)
+            elif 'pressed' in each:
+                keyboard_type(keyboard1, each, 'pressed')
+
+    return replay_result
     # # Type 'Hello World' using the shortcut type method
     # keyboard.type('Hello World')
 

@@ -1,5 +1,5 @@
 import time
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageGrab
 import os
 from pynput import mouse
 from pynput.mouse import Button
@@ -11,14 +11,28 @@ from pynput import keyboard
 
 def record_():
     time_last_op = time.time()
-    file_name = 'records/record' + time.strftime("%Y%m%d%H%M%S") + '.txt'
-    f = open(file_name, 'a')
+    f_list = []
+    # screen_shot_area = [0, 0, 0, 0]
+    i = 1
 
     def count_wait_time():
         nonlocal time_last_op
         time_wait = float(time.time() - time_last_op)
         time_last_op = time.time()
         return time_wait
+
+    def capture(x1, y1, x2, y2, path):
+        # 参数说明
+        # 第一个参数 开始截图的x坐标
+        # 第二个参数 开始截图的y坐标
+        # 第三个参数 结束截图的x坐标
+        # 第四个参数 结束截图的y坐标
+        bbox = (x1, y1, x2, y2)
+        im = ImageGrab.grab(bbox)
+
+        # 参数 保存截图文件的路径
+        im.save(path)
+        print('screen_shot succeed', im.size)
 
     def picture_draw(path, locate):
         oriImg = pyscreeze.screenshot()
@@ -34,8 +48,6 @@ def record_():
     def on_move(x, y):
         # pass
         print('Pointer moved to {0}'.format((x,y)))
-
-    i = 1
 
     def on_click(x, y, button, pressed):
         nonlocal i
@@ -55,54 +67,63 @@ def record_():
                 # picture_draw(picture_path, (int(x) - 25, int(y) - 25, int(x) + 25, int(y) + 25))
                 # i += 1
             time_wait = count_wait_time()
-            f.write('{0} Pressed at ({1},{2},{3})'.format(button_name, x, y, time_wait) + '\n')
+            # f.write('{0} Pressed at ({1},{2},{3})'.format(button_name, x, y, time_wait) + '\n')
+            f_list.append('{0} Pressed at ({1},{2},{3})'.format(button_name, x, y, time_wait) + '\n')
             print('{0} Pressed at ({1},{2},{3})'.format(button_name, x, y, time_wait))
         else:
             time_wait = count_wait_time()
-            f.write('{0} Released at ({1},{2},{3})'.format(button_name, x, y, time_wait) + '\n')
+            f_list.append('{0} Released at ({1},{2},{3})'.format(button_name, x, y, time_wait) + '\n')
             print('{0} Released at ({1},{2},{3})'.format(button_name, x, y, time_wait))
-        if not pressed:
-            # return False
-            pass
 
     def on_scroll(x, y, dx, dy):
         time_wait = count_wait_time()
-        f.write('scrolled {0} at {1}'.format('down' if dy < 0 else 'up', (x, y, dx, dy, time_wait)) + '\n')
+        f_list.append('scrolled {0} at {1}'.format('down' if dy < 0 else 'up', (x, y, dx, dy, time_wait)) + '\n')
         print('scrolled {0} at {1}'.format('down' if dy < 0 else 'up', (x, y, dx, dy, time_wait)))
 
     def on_press(key):
-        try:
-            key_char = key.char
-            time_wait = count_wait_time()
-            f.write('alphanumeric key [{0}] pressed --{1}'.format(key_char, time_wait) + '\n')
-            print('alphanumeric key [{0}] pressed --{1}'.format(key_char, time_wait))
-        except AttributeError:
-            time_wait = count_wait_time()
-            f.write('special key [{0}] pressed --{1}'.format(key, time_wait) + '\n')
-            print('special key [{0}] pressed --{1}'.format(key, time_wait))
-
-    def on_release(key):
-        time_wait = count_wait_time()
-        if '\'' in str(key):
-            key = str(key).replace('\'', '')
-        f.write('[{0}] released --{1}'.format(key, time_wait) + '\n')
-        print('[{0}] released --{1}'.format(key, time_wait))
         if key == keyboard.Key.esc:
             # Stop listener
             return False
 
-    listener1 = mouse.Listener(no_move=on_move, on_click=on_click, on_scroll=on_scroll, suppress=False)
-    # Collect events until released
-    listener2 = keyboard.Listener(on_press=on_press, on_release=on_release)
-    try:
-        listener1.start()
-        listener2.start()
-        # listener1.join()
-        listener2.join()
-    finally:
-        f.close()
-        listener1.stop()
-        listener2.stop()
+        key_char = keycode_convert(str(key))
+        time_wait = count_wait_time()
+        f_list.append('key [{0}] pressed --{1}'.format(key_char, time_wait) + '\n')
+        print('key [{0}] pressed --{1}'.format(key_char, time_wait))
+
+    def on_release(key):
+        if key == keyboard.Key.esc:
+            # Stop listener
+            return False
+
+        key_char = keycode_convert(str(key))
+        if key_char == 'pause' or key_char == 'resume':
+            pass
+        else:
+            time_wait = count_wait_time()
+            f_list.append('key [{0}] released --{1}'.format(key_char, time_wait) + '\n')
+            print('key [{0}] released --{1}'.format(key_char, time_wait))
+
+    def keycode_convert(key_char):
+        if '\'' in key_char:
+            key_char = str(key_char).replace('\'', '')
+        if '\\x01' in key_char:
+            key_char = key_char.replace('\\x01', 'a')
+        if '\\x13' in key_char:
+            key_char = key_char.replace('\\x13', 's')
+        if '\\x18' in key_char:
+            key_char = key_char.replace('\\x18', 'x')
+        if '\\x03' in key_char:
+            key_char = key_char.replace('\\x03', 'c')
+        if '\\x16' in key_char:
+            key_char = key_char.replace('\\x16', 'v')
+        return key_char
+
+    with mouse.Listener(no_move=on_move, on_click=on_click, on_scroll=on_scroll, suppress=False) as listener1:
+        # Collect events until released
+        with keyboard.Listener(on_press=on_press, on_release=on_release) as listener2:
+            listener2.join()
+
+    return f_list
 
 if __name__ == '__main__':
     record_()
