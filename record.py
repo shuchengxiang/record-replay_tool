@@ -116,6 +116,29 @@ def record_():
             key_char = key_char.replace('\\x03', 'c')
         if '\\x16' in key_char:
             key_char = key_char.replace('\\x16', 'v')
+        if '<96>' in key_char:
+            key_char = key_char.replace('<96>', '0')
+        if '<97>' in key_char:
+            key_char = key_char.replace('<97>', '1')
+        if '<98>' in key_char:
+            key_char = key_char.replace('<98>', '2')
+        if '<99>' in key_char:
+            key_char = key_char.replace('<99>', '3')
+        if '<100>' in key_char:
+            key_char = key_char.replace('<100>', '4')
+        if '<101>' in key_char:
+            key_char = key_char.replace('<101>', '5')
+        if '<102>' in key_char:
+            key_char = key_char.replace('<102>', '6')
+        if '<103>' in key_char:
+            key_char = key_char.replace('<103>', '7')
+        if '<104>' in key_char:
+            key_char = key_char.replace('<104>', '8')
+        if '<105>' in key_char:
+            key_char = key_char.replace('<105>', '9')
+        if '<110>' in key_char:
+            key_char = key_char.replace('<110>', '.')
+
         return key_char
 
     with mouse.Listener(no_move=on_move, on_click=on_click, on_scroll=on_scroll, suppress=False) as listener1:
