@@ -10,8 +10,8 @@ from tkinter import messagebox, filedialog, Tk, Label, Button
 # 开始截图
 def buttonCaptureClick(event=None):
     # 最小化主窗口
-    root.attributes("-alpha", 0)
     # root.state('icon')
+    root.withdraw()
     time.sleep(0.2)
     filename = 'temp.png'
     # grab()方法默认对全屏幕进行截图
@@ -24,28 +24,32 @@ def buttonCaptureClick(event=None):
 
     # 截图结束，恢复主窗口，并删除临时的全屏幕截图文件
     # root.state('normal')
-    root.attributes("-alpha", 1)
+    root.deiconify()
     os.remove(filename)
 
 
 def button_record_click(event=None):
     # 最小化主窗口
-    root.state('icon')
+    # root.state('icon')
+    root.withdraw()
+    im = ImageGrab.grab()
     f_list = record_()
     root.wm_attributes('-topmost', 1)
     messagebox.showinfo(title='提示', message='录制完成！')
     default_save_filename = 'record' + time.strftime("%Y%m%d%H%M%S") + '.txt'
     filename = filedialog.asksaveasfilename(title='保存录制脚本文件', initialfile=default_save_filename, filetypes=[("text", ".txt")])
     if filename:
+        im.save(filename.split('.')[0] + '_录制开始时的截图.png')
         with open(filename, 'a') as f:
             f.writelines(f_list)
     # 恢复主窗口
-    root.state('normal')
-
+    # root.state('normal')
+    root.deiconify()
 
 def button_record_p_r_click(event=None):
     # 最小化主窗口
-    root.state('icon')
+    # root.state('icon')
+    root.withdraw()
     filename = filedialog.askopenfilename(title='打开继续录制文件', filetypes=[('text', '*.txt'), ('All Files', '*')])
     if filename:
         # 屏蔽记录鼠标双击选择的第二下release
@@ -57,12 +61,14 @@ def button_record_p_r_click(event=None):
         messagebox.showinfo(title='提示', message='录制完成！')
     root.wm_attributes('-topmost', 1)
     # 恢复主窗口
-    root.state('normal')
+    # root.state('normal')
+    root.deiconify()
 
 
 def button_replay_click(event=None):
     # 最小化主窗口
-    root.state('icon')
+    # root.state('icon')
+    root.withdraw()
     filename = filedialog.askopenfilename(title='打开回放文件', filetypes=[('text', '*.txt'), ('All Files', '*')])
     if filename:
         result = replay_(filename)
@@ -74,7 +80,8 @@ def button_replay_click(event=None):
             messagebox.showinfo(title='提示', message='回放中断！')
     root.wm_attributes('-topmost', 1)
     # 恢复主窗口
-    root.state('normal')
+    # root.state('normal')
+    root.deiconify()
 
 if __name__ == '__main__':
     root = Tk()
