@@ -49,8 +49,8 @@ def button_record_click(event=None):
 def button_record_p_r_click(event=None):
     # 最小化主窗口
     # root.state('icon')
-    root.withdraw()
     filename = filedialog.askopenfilename(title='打开继续录制文件', filetypes=[('text', '*.txt'), ('All Files', '*')])
+    root.withdraw()
     if filename:
         # 屏蔽记录鼠标双击选择的第二下release
         time.sleep(0.1)
@@ -68,8 +68,8 @@ def button_record_p_r_click(event=None):
 def button_replay_click(event=None):
     # 最小化主窗口
     # root.state('icon')
-    root.withdraw()
     filename = filedialog.askopenfilename(title='打开回放文件', filetypes=[('text', '*.txt'), ('All Files', '*')])
+    root.withdraw()
     if filename:
         result = replay_(filename)
         if result == 'replay_complete':
